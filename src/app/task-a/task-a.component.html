@@ -1,0 +1,82 @@
+<div class="container mt-5" >
+    <form [formGroup]="myForm" (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>First Name</mat-label>
+              <input type="text" matInput formControlName="fName">
+              <mat-error *ngIf="this.myForm.get('fName')?.errors && this.myForm.get('fName')?.touched">
+                <mat-error *ngIf="this.myForm.get('fName')?.errors?.['required']">
+                  First Name Required....
+                </mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Last Name</mat-label>
+              <input type="text" matInput formControlName="lName">
+              <mat-error *ngIf="this.myForm.get('lName')?.errors && this.myForm.get('lName')?.touched">
+                <mat-error *ngIf="this.myForm.get('lName')?.errors?.['required']">
+                  Last Name Required...
+                </mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>How should we contact You ?</mat-label>
+              <mat-select [(value)]="selected" (valueChange)="contactMethod()" formControlName="contactMethod">
+                <mat-option>None</mat-option>
+                <mat-option value="email">Email</mat-option>
+                <mat-option value="phone">Phone Number</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <p>You selected: {{selected}}</p>
+          </div>
+        </div>
+        <div class="col-sm-6" *ngIf="selected == 'email'">
+         <div class="form-group">
+          <mat-form-field class="w-100" appearance="fill">
+            <mat-label>Email Address</mat-label>
+            <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
+            <mat-icon matSuffix> mail_outline</mat-icon>
+            <mat-error *ngIf="this.myForm.get('email')?.errors && this.myForm.get('email')?.touched">
+              <mat-error *ngIf="this.myForm.get('email')?.errors?.['required']">
+                email is Required...
+              </mat-error>
+              <mat-error *ngIf="this.myForm.get('email')?.errors?.['email']">
+                Enter Valid Email ...
+              </mat-error>
+            </mat-error>
+          </mat-form-field>
+         </div>
+        </div>
+        <div class="col-sm-6" *ngIf="selected == 'phone'">
+          <div class="form-group">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Phone Number</mat-label>
+              <span matPrefix>+91 &nbsp;</span>
+              <input type="tel" matInput formControlName="phNumber" placeholder="555-555-7777" maxlength="10" minlength="10">
+              <mat-icon matSuffix>phone</mat-icon>
+              <mat-error *ngIf="this.myForm.get('phNumber')?.errors && this.myForm.get('phNumber')?.touched">
+                <mat-error *ngIf="this.myForm.get('phNumber')?.errors?.['required']">
+                  Phone Number is Required...
+                </mat-error>
+                <mat-error *ngIf="this.myForm.get('phNumber')?.errors?.['minlength']">
+                  Enter a Valid Phone number.{{this.myForm.get('phNumber')?.errors?.['minlength'].requiredLength - this.myForm.get('phNumber')?.errors?.['minlength'].actualLength}} more digits Required.
+                </mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <button [disabled]="!myForm.valid" class="btn btn-primary">submit</button>
+    </form>
+  </div>
+   
